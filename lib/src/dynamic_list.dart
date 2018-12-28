@@ -41,17 +41,14 @@ class _DynamicListRouteSate extends State<DynamicListRoute> {
                   setState(() {});
                 },
               ),
-//              SizedBox(
-//                child: Container(
-//                  padding: const EdgeInsets.all(8.0),
-//                  alignment: Alignment.center,
-//                  height: 10.0,
-//                  decoration: BoxDecoration(
-//                    color: Colors.red,
-//                  ),
-//                ),
-//
-//              ),
+              Container(
+                      padding: const EdgeInsets.all(8.0),
+                      alignment: Alignment.center,
+                      height: 10.0,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                      ),
+              ),
               Expanded(
                 child: ListView.builder(
                     itemCount: items.length,
