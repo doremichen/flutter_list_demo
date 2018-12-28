@@ -119,6 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "dynamic list view demo");
               },
             ),
+            RaisedButton(
+              child: Text("Show alert dialog"),
+              onPressed: () {
+                Utils.showInfoDialog(context, "I am customize dialog..");
+              },
+            ),
           ],
         ),
       ),
