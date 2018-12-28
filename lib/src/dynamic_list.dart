@@ -31,20 +31,27 @@ class _DynamicListRouteSate extends State<DynamicListRoute> {
             children: <Widget>[
               TextField(
                 controller: _editItemController,
+                decoration: InputDecoration(
+                  labelText: "Please input the item",
+                ),
                 onSubmitted: (text) {
                   items.add(text);
                   _editItemController.clear();
                   // Update list view
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
-
               ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(color: Colors.red,),
-              ),
+//              SizedBox(
+//                child: Container(
+//                  padding: const EdgeInsets.all(8.0),
+//                  alignment: Alignment.center,
+//                  height: 10.0,
+//                  decoration: BoxDecoration(
+//                    color: Colors.red,
+//                  ),
+//                ),
+//
+//              ),
               Expanded(
                 child: ListView.builder(
                     itemCount: items.length,
@@ -68,6 +75,7 @@ class _DynamicListRouteSate extends State<DynamicListRoute> {
           ),
         ),
       ),
+      resizeToAvoidBottomPadding: false,    //avoid button overflow
     );
 
   }
