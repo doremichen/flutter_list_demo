@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'src/utils.dart';
+import 'src/dynamic_list.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
         "simple list demo": (context) => SimpleLitViewRoute(),
         "listview seperator demo": (context) => ListViewSeperatorRoute(),
         "complex listview demo": (context) => ComplexListViewRoute(),
+        "dynamic list view demo": (context) => DynamicListRoute(),
       },
     );
   }
@@ -50,18 +54,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-//  int _counter = 0;
-//
-//  void _incrementCounter() {
-//    setState(() {
-//      // This call to setState tells the Flutter framework that something has
-//      // changed in this State, which causes it to rerun the build method below
-//      // so that the display can reflect the updated values. If we changed
-//      // _counter without calling setState(), then the build method would not be
-//      // called again, and so nothing would appear to happen.
-//      _counter++;
-//    });
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             RaisedButton(
+              child: Text("Test toast"),
+              onPressed: () {
+                Utils.showToast("Hi Adam...");
+              },
+            ),
+            RaisedButton(
               child: Text("List demo1"),
               onPressed: () {
                   Navigator.pushNamed(context, "simple list demo");
@@ -115,26 +113,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "complex listview demo");
               },
             ),
-//            Text(
-//              'You have pushed the button this many times:',
-//            ),
-//            Text(
-//              '$_counter',
-//              style: Theme.of(context).textTheme.display1,
-//            ),
+            RaisedButton(
+              child: Text("Dynamic list view"),
+              onPressed: () {
+                Navigator.pushNamed(context, "dynamic list view demo");
+              },
+            ),
           ],
         ),
       ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: _incrementCounter,
-//        tooltip: 'Increment',
-//        child: Icon(Icons.add),
-//      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
 
 class SimpleLitViewRoute extends StatelessWidget {
+
+  List<String> itemName = ["Test1", "Test2", "Test3"];
+  // TextField controller
+  TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,12 +153,25 @@ class SimpleLitViewRoute extends StatelessWidget {
           ),
           Text("================================"),
           Expanded(
-            child: ListView.builder(itemBuilder: (context, position) {
-              return Card(
-                child: Padding(padding: const EdgeInsets.all(20.0),
-                  child: Text(position.toString(), style: TextStyle(fontSize: 22.0),),),
+            child: ListView.builder(
+              itemCount: itemName.length,
+              itemBuilder: (context, position) {
+
+              // click listener
+              return GestureDetector(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(itemName[position], style: TextStyle(fontSize: 22.0),),
+                  ),
+                ),
+                onTap: () {
+                  Utils.showToast("item $position is clicked...");
+                },
               );
-            }),
+
+             },
+            ),
           ),
 
         ],
@@ -261,5 +271,4 @@ class ComplexListViewRoute extends StatelessWidget {
       ),
     );
   }
-
 }
