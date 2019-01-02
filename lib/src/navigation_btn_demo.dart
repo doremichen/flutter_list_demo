@@ -21,6 +21,8 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
     Text("Index 2: Others"),
   ];
 
+  bool _visible = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -29,7 +31,32 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
         title: Text("Demo navigation bar"),
       ),
       body: Center(
-        child: _buttons.elementAt(_selectId),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buttons.elementAt(_selectId),
+            Container(
+              height: 8.0,
+              color: Colors.red,
+            ),
+            Center(
+              child: AnimatedOpacity(
+                opacity: _visible? 1.0: 0.0,
+                duration: Duration(seconds: 3),
+                child: Container(
+                  width: 200.0,
+                  height: 200.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Container(
+              height: 8.0,
+              color: Colors.red,
+            ),
+          ],
+
+        )
       ),
       bottomNavigationBar: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
@@ -80,6 +107,16 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
 
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              _visible = !_visible;
+            });
+          },
+        tooltip: "Tool Opacity",
+        child: Icon(Icons.flip),
       ),
 
     );

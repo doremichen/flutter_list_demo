@@ -294,7 +294,7 @@ class ListViewSeperatorRoute extends StatelessWidget {
               itemBuilder: (context, position) {
                 return Card(
                   child: Padding(padding: const EdgeInsets.all(10.0),
-                    child: Text(position.toString(), style: TextStyle(fontSize: 22.0),),),
+                    child: Text("Item: $position", style: TextStyle(fontSize: 22.0),),),
                 );
               },
               separatorBuilder: (context, position) {
@@ -303,11 +303,20 @@ class ListViewSeperatorRoute extends StatelessWidget {
               itemCount: 10,
             ),
           ),
-          Text("======================================="),
+          Container(
+            width: 350.0,
+            height: 10.0,
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            color: Colors.red,
+          ),
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, position) {
-                  return ListTile(title: Text("$position"),);
+                  return ListTile(title: Text("$position"),
+
+                  onTap: (){
+
+                  },);
               },
               itemCount: 20,
             ),
@@ -348,16 +357,20 @@ class ComplexListViewRoute extends StatelessWidget {
       appBar: AppBar( title: Text("Demo complex listView"),),
       body: ListView.separated(
           itemBuilder: (context, index) {
-                          final item = items[index];
+              final item = items[index];
 
               if (item is HeadingItem) {
                 return Card(
+                  color: Colors.yellow,
                   child: Text(item.heading, style: Theme.of(context).textTheme.headline,),
                 );
               } else if (item is MessageItem) {
-                  return GestureDetector(
-                    child: ListTile(title: Text(item.sender), subtitle: Text(item.body),),
-                    onTap: () {print("Hit me.... $index");},
+                  return ListTile(
+                    title: Text(item.sender),
+                    subtitle: Text(item.body),
+                    onTap: (){
+                        Utils.showToast("Hit me...I am ${item.sender}");
+                    },
                   );
               }
           },
