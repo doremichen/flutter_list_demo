@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'src/utils.dart';
 import 'src/dynamic_list.dart';
 
-void main() => runApp(MyApp());
+
+void main() {
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp,
+       DeviceOrientation.portraitDown]
+  ).then((_) {
+    runApp(new MyApp());
+  });
+
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -128,11 +138,54 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      resizeToAvoidBottomPadding: false,    //avoid button overflow
     );
   }
 }
 
+class Todo {
+  final String title;
+  final String description;
+
+  Todo(this.title, this.description);
+}
+
+///
+/// Detail view
+///
+class DetailScreen extends StatelessWidget {
+  final Todo todo;
+
+  DetailScreen({Key key, @required this.todo}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Title: ${todo.title}"),),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 300.0,
+              height: 100.0,
+              child: Text("Info: ${todo.description}",
+                style: TextStyle(fontSize: 24),
+                softWrap: true,
+              ),
+            ),
+
+          ],
+        ),
+      ),
+
+    );
+  }
+
+}
 class SimpleLitViewRoute extends StatelessWidget {
+
+  final todos = List<Todo>.generate(10, (i) => Todo("Todo $i", "Todo description: I am $i item"));
 
   List<String> itemName = ["Test1", "Test2", "Test3"];
   // TextField controller
@@ -160,7 +213,7 @@ class SimpleLitViewRoute extends StatelessWidget {
           Text("================================"),
           Expanded(
             child: ListView.builder(
-              itemCount: itemName.length,
+              itemCount: todos.length,
               itemBuilder: (context, position) {
 
               // click listener
@@ -168,11 +221,13 @@ class SimpleLitViewRoute extends StatelessWidget {
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text(itemName[position], style: TextStyle(fontSize: 22.0),),
+                    child: Text(todos[position].title, style: TextStyle(fontSize: 24.0),),
                   ),
                 ),
                 onTap: () {
                   Utils.showToast("item $position is clicked...");
+                  Navigator.push(context, MaterialPageRoute(builder:
+                      (context) => DetailScreen(todo: todos[position],)));
                 },
               );
 
