@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'src/utils.dart';
 import 'src/dynamic_list.dart';
+import 'src/navigation_btn_demo.dart';
 
 
 void main() {
@@ -133,6 +134,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("Show alert dialog"),
               onPressed: () {
                 Utils.showInfoDialog(context, "I am customize dialog..");
+              },
+            ),
+            RaisedButton(
+              child: Text("demo navigationbar"),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DemoNavigationBar()));
               },
             ),
           ],
