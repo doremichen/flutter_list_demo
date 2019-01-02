@@ -45,6 +45,43 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
             });
           },
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Drawer header"),
+              decoration: BoxDecoration(
+                  color: Colors.orange[200],
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 8.0,
+                  )
+              ),
+            ),
+            ClipRect(
+              child: ListTile(
+                leading: Icon(Icons.change_history),
+                title: Text("Change history"),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            ClipRect(
+              child: ListTile(
+                leading: Icon(Icons.change_history),
+                title: Text("Change history"),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+
+          ],
+        ),
+      ),
+
     );
   }
 

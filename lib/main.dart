@@ -153,8 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
 class Todo {
   final String title;
   final String description;
+  String ret;
 
-  Todo(this.title, this.description);
+  Todo({this.title, this.description, this.ret});
 }
 
 ///
@@ -181,7 +182,15 @@ class DetailScreen extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: RaisedButton(
+                child: Text("Back"),
+                onPressed: (){
+                  todo.ret = "I am back... from ${todo.title}";
+                  Navigator.pop(context, todo);
+              },),
+            ),
           ],
         ),
       ),
@@ -192,11 +201,25 @@ class DetailScreen extends StatelessWidget {
 }
 class SimpleLitViewRoute extends StatelessWidget {
 
-  final todos = List<Todo>.generate(10, (i) => Todo("Todo $i", "Todo description: I am $i item"));
+  final todos = List<Todo>.generate(10, (i) => Todo(title: "Todo $i", description: "Todo description: Hello $i item"));
 
   List<String> itemName = ["Test1", "Test2", "Test3"];
   // TextField controller
   TextEditingController _controller = TextEditingController();
+
+  // show result
+  String _retstr;
+
+  Future<void> _goToNext(BuildContext context, int position) async {
+    Future<Todo> data = Navigator.push(context, MaterialPageRoute(builder:
+        (context) => DetailScreen(todo: todos[position],)));
+
+    data.then((value) {
+      _retstr = value.ret;
+      Utils.showToast(_retstr);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +240,12 @@ class SimpleLitViewRoute extends StatelessWidget {
               ],
             ),
           ),
-          Text("================================"),
+          Container(
+            width: 300.0,
+            height: 10.0,
+            color: Colors.red,
+          ),
+
           Expanded(
             child: ListView.builder(
               itemCount: todos.length,
@@ -233,8 +261,9 @@ class SimpleLitViewRoute extends StatelessWidget {
                 ),
                 onTap: () {
                   Utils.showToast("item $position is clicked...");
-                  Navigator.push(context, MaterialPageRoute(builder:
-                      (context) => DetailScreen(todo: todos[position],)));
+                  _goToNext(context, position);
+//                  var ret = Navigator.push(context, MaterialPageRoute(builder:
+//                      (context) => DetailScreen(todo: todos[position],)));
                 },
               );
 
