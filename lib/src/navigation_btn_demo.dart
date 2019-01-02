@@ -82,7 +82,7 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
                   color: Colors.orange[200],
                   border: Border.all(
                     color: Colors.black,
-                    width: 8.0,
+                    width: 4.0,
                   )
               ),
             ),
