@@ -16,12 +16,18 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
   int _selectId = 1;
 
   final _buttons = [
-    Text("Index 0: Home"),
-    Text("Index 1: Office"),
-    Text("Index 2: Others"),
+    Text("Home"),
+    Text("Office"),
+    Text("Exit"),
   ];
 
   bool _visible = false;
+
+  var items2 = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
+    BottomNavigationBarItem(icon: Icon(Icons.home),title: Text("Office")),
+    BottomNavigationBarItem(icon: Icon(Icons.close),title: Text("Exit")),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,7 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buttons.elementAt(_selectId),
+
             Container(
               height: 8.0,
               color: Colors.red,
@@ -54,19 +60,25 @@ class _DemoNavigationBarState extends State<DemoNavigationBar> {
               height: 8.0,
               color: Colors.red,
             ),
+            Container(
+              alignment: Alignment.center,
+              child: _buttons.elementAt(_selectId),
+            ),
           ],
 
         )
       ),
       bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-            BottomNavigationBarItem(icon: Icon(Icons.home),title: Text("Office")),
-            BottomNavigationBarItem(icon: Icon(Icons.home),title: Text("Others")),
-          ],
+          items: items2,
           currentIndex: _selectId,
           fixedColor: Colors.orangeAccent,
           onTap: (id) {
+
+            if (id == items2.length-1) {
+              // exit
+              Navigator.pop(context);
+            }
+
             setState(() {
               _selectId = id;
             });
