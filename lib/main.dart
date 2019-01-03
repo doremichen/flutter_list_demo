@@ -5,6 +5,7 @@ import 'src/utils.dart';
 import 'src/dynamic_list.dart';
 import 'src/navigation_btn_demo.dart';
 import 'src/custom_scroll_view.dart';
+import 'src/tab_bar_view.dart';
 
 
 void main() {
@@ -150,6 +151,12 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             SnackBarPage(),
+            RaisedButton(
+              child: Text("demo tabbar view"),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DemoTabBarView()));
+              },
+            ),
           ],
         ),
       ),
