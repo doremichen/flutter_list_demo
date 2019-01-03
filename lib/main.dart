@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'src/utils.dart';
 import 'src/dynamic_list.dart';
 import 'src/navigation_btn_demo.dart';
+import 'src/custom_scroll_view.dart';
 
 
 void main() {
@@ -140,6 +141,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("demo navigationbar"),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => DemoNavigationBar()));
+              },
+            ),
+            RaisedButton(
+              child: Text("demo custom scroll view"),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DemoCustomScrollView()));
               },
             ),
           ],
