@@ -149,12 +149,50 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => DemoCustomScrollView()));
               },
             ),
+            SnackBarPage(),
           ],
         ),
       ),
       resizeToAvoidBottomPadding: false,    //avoid button overflow
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+  }
+}
+
+///
+/// Show snackbar widget
+///
+class SnackBarPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: RaisedButton(
+        child: Text("demo Snack bar"),
+        onPressed: () {
+
+          SnackBar _snackBar = SnackBar(
+            content: Text("I am snackBar..."),
+            action: SnackBarAction(
+                label: "Action",
+                onPressed: () {
+                  Utils.showToast("Sanck bar action....");
+                }
+            ),
+          );
+
+
+          Scaffold.of(context).showSnackBar(_snackBar);
+        },
+      ),
+    );
+  }
+
 }
 
 class Todo {
