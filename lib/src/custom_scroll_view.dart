@@ -50,16 +50,24 @@ class _DemoCustomScrollViewState extends State<DemoCustomScrollView> {
                   (context, index) {
                 return Container(
                   alignment: Alignment.center,
+                  margin: const EdgeInsets.all(4.0),
                   color: Colors.grey,
-                  child: Text(
-                    "SliverFixedExtentList",
-                    textAlign: TextAlign.center,
+                  child: ListTile(
+                    title: Text(
+                      "SliverFixedExtentList  $index item",
+                      textAlign: TextAlign.center,
+                    ),
+                    onTap: () {
+                      
+                    },
                   ),
                 );
               },
-              childCount: 1,
+              childCount: 2,
+              
             ),
             itemExtent: 150.0,
+            
           ),
 
           /// Sliver grid
@@ -76,6 +84,12 @@ class _DemoCustomScrollViewState extends State<DemoCustomScrollView> {
             ),
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 180.0,
+
+              mainAxisSpacing: 1.0,
+
+              crossAxisSpacing: 4.0,
+
+              childAspectRatio: 1.0,
 
             ),
           ),
