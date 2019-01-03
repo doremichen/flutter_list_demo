@@ -2,6 +2,7 @@
 /// Workings with tab
 ///
 import 'package:flutter/material.dart';
+import 'utils.dart';
 
 
 class DemoTabBarView extends StatelessWidget {
@@ -24,7 +25,16 @@ class DemoTabBarView extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
-                Text("This is tab1"),
+                /// tab 1 view
+                Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text("This is tab1"),
+                      MyForm(),
+
+                    ],
+                  ),
+                ),
                 Text("This is tab2"),
                 /// tab 3 view
                 Center(
@@ -46,6 +56,57 @@ class DemoTabBarView extends StatelessWidget {
       ),
     );
 
+  }
+
+}
+///
+/// Create form widget
+///
+class MyForm extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyFormState();
+  }
+
+}
+
+class _MyFormState extends State<MyForm> {
+
+  // form key
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                // return error string if not valid input
+                return "Please enter non empty string";
+              }
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              child: Text("Check"),
+              onPressed: () {
+                  // check form state
+                  if (_formKey.currentState.validate()) {
+                    // show snack bar
+                    Scaffold.of(context)
+                        .showSnackBar(SnackBar(content: Text('Processing Data')));
+                  }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
 }

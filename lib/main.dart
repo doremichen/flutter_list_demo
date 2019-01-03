@@ -150,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => DemoCustomScrollView()));
               },
             ),
-            SnackBarPage(),
+            Utils.showSnackBar("I am snackBar"),
             RaisedButton(
               child: Text("demo tabbar view"),
               onPressed: () {
@@ -172,35 +172,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-///
-/// Show snackbar widget
-///
-class SnackBarPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        child: Text("demo Snack bar"),
-        onPressed: () {
-
-          SnackBar _snackBar = SnackBar(
-            content: Text("I am snackBar..."),
-            action: SnackBarAction(
-                label: "Action",
-                onPressed: () {
-                  Utils.showToast("Sanck bar action....");
-                }
-            ),
-          );
-
-
-          Scaffold.of(context).showSnackBar(_snackBar);
-        },
-      ),
-    );
-  }
-
-}
 
 class Todo {
   final String title;
@@ -255,19 +226,14 @@ class SimpleLitViewRoute extends StatelessWidget {
 
   final todos = List<Todo>.generate(10, (i) => Todo(title: "Todo $i", description: "Todo description: Hello $i item"));
 
-  List<String> itemName = ["Test1", "Test2", "Test3"];
-  // TextField controller
-  TextEditingController _controller = TextEditingController();
-
-  // show result
-  String _retstr;
+  final List<String> itemName = ["Test1", "Test2", "Test3"];
 
   Future<void> _goToNext(BuildContext context, int position) async {
     Future<Todo> data = Navigator.push(context, MaterialPageRoute(builder:
         (context) => DetailScreen(todo: todos[position],)));
 
     data.then((value) {
-      _retstr = value.ret;
+      final String _retstr = value.ret;
       Utils.showToast(_retstr);
     });
   }
