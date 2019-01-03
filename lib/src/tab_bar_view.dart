@@ -35,7 +35,16 @@ class DemoTabBarView extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text("This is tab2"),
+                /// tab 2 view
+                Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text("This is tab2"),
+                      MyTextField(),
+
+                    ],
+                  ),
+                ),
                 /// tab 3 view
                 Center(
                   child: Column(
@@ -103,6 +112,54 @@ class _MyFormState extends State<MyForm> {
                   }
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+}
+///
+/// Build my custom text field widget
+///
+class MyTextField extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyTextFieldSate();
+  }
+
+}
+
+class _MyTextFieldSate extends State<MyTextField> {
+
+  final TextEditingController _controller = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    // add text edit listener
+    _controller.addListener(() {
+      // handle text changed process
+      Utils.showToast("New string: ${_controller.text}");
+    });
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    // dispose text edit controller
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        children: <Widget>[
+          TextFormField(
+            controller: _controller,
           ),
         ],
       ),
