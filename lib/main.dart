@@ -6,6 +6,8 @@ import 'src/dynamic_list.dart';
 import 'src/navigation_btn_demo.dart';
 import 'src/custom_scroll_view.dart';
 import 'src/tab_bar_view.dart';
+import 'src/hero_app.dart';
+
 
 
 void main() {
@@ -155,6 +157,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("Demo tabBar view"),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => DemoTabBarView()));
+              },
+            ),
+            RaisedButton(
+              child: Text("Demo hero animation"),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HeroAnimation()));
               },
             ),
           ],
