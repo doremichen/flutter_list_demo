@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Utils.showSnackBar("I am snackBar"),
             RaisedButton(
-              child: Text("demo tabbar view"),
+              child: Text("Demo tabBar view"),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => DemoTabBarView()));
               },

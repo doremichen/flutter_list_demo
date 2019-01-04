@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'utils.dart';
 
+import 'animate_grow_transition.dart';
+
 
 class DemoTabBarView extends StatelessWidget {
   @override
@@ -11,7 +13,7 @@ class DemoTabBarView extends StatelessWidget {
 
     return MaterialApp(
       home: DefaultTabController(
-          length: 3,
+          length: 4,
           child: Scaffold(
             appBar: AppBar(
               title: Text("Demo tab bar"),
@@ -20,6 +22,7 @@ class DemoTabBarView extends StatelessWidget {
                   Tab(child: Text("Tab1"),),
                   Tab(child: Text("Tab2"),),
                   Tab(child: Text("Tab3"),),
+                  Tab(child: Text("Tab4"),),
                 ],
               ),
             ),
@@ -54,6 +57,7 @@ class DemoTabBarView extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text("This is tab3"),
+                      LogoApp(),
                       RaisedButton(
                         child: Text("Exit"),
                         onPressed: () {
@@ -62,6 +66,15 @@ class DemoTabBarView extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                // tab 4 view
+                Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text("This is tab4"),
+                      AnimateGrow(),
+                    ],
+                  )
                 ),
               ],
             ),
@@ -73,6 +86,102 @@ class DemoTabBarView extends StatelessWidget {
 
 }
 
+class AnimatedLogo extends AnimatedWidget {
+
+  static final _opacityTween = Tween<double>(begin: 0.1, end: 1.0);
+  static final _szieTween = Tween<double>(begin: 0.0, end: 300.0);
+
+
+  AnimatedLogo({Key key, Animation<double> animation}):super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return Center(
+      child: Opacity(
+        opacity: _opacityTween.evaluate(animation),
+          child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          height: _szieTween.evaluate(animation),
+          width: _szieTween.evaluate(animation),
+          child: FlutterLogo(),
+        ),
+      ),
+//      child: Container(
+//        margin: const EdgeInsets.symmetric(vertical: 10.0),
+//        height: animation.value,
+//        width: animation.value,
+//        child: FlutterLogo(),
+//      ),
+    );
+  }
+
+}
+
+
+class LogoApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+
+    return _LogoAppState();
+  }
+
+}
+
+class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
+
+  Animation<double> _animation;
+  AnimationController _controller;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: Duration(seconds: 5));
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn)
+                 ..addStatusListener((status){
+                   if (status == AnimationStatus.completed) {
+                     _controller.reverse();
+                   } else if (status == AnimationStatus.dismissed) {
+                     _controller.forward();
+                   }
+                 });
+//    _animation = Tween(begin: 0.0, end: 300.0).animate(_controller)
+//                 ..addStatusListener((status) {
+//                   if (status == AnimationStatus.completed) {
+//                        _controller.reverse();
+//                   } else if (status == AnimationStatus.dismissed){
+//                        _controller.forward();
+//                   }
+//                 });
+    // start forward
+    _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return AnimatedLogo(animation: _animation,);
+//    return Center(
+//      child: Container(
+//        margin: const EdgeInsets.symmetric(vertical: 18.0),
+//        height: _animation.value,
+//        width: _animation.value,
+//        child: FlutterLogo(),
+//      ),
+//    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+
+}
+
+
 class MyListView extends StatefulWidget {
 
   @override
@@ -81,6 +190,8 @@ class MyListView extends StatefulWidget {
   }
 
 }
+
+
 
 class _MyListViewState extends State<MyListView> {
 
