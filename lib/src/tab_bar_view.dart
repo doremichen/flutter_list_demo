@@ -37,11 +37,15 @@ class DemoTabBarView extends StatelessWidget {
                 ),
                 /// tab 2 view
                 Center(
+//                  child: MyListView(),
                   child: Column(
                     children: <Widget>[
                       Text("This is tab2"),
                       MyTextField(),
-
+                      Expanded(
+                        child: MyListView(),
+                      ),
+//                      MyListView(),
                     ],
                   ),
                 ),
@@ -68,6 +72,78 @@ class DemoTabBarView extends StatelessWidget {
   }
 
 }
+
+class MyListView extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return _MyListViewState();
+  }
+
+}
+
+class _MyListViewState extends State<MyListView> {
+
+  // For list view
+  final List<String> items = List<String>.generate(10, (i) => "Item ${i+1}");
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemBuilder: (context, id) {
+        final String item = items[id];
+
+        return Dismissible(
+          key: Key(item),
+          onDismissed: (direction) {
+            // Remove item
+            setState(() {
+              items.removeAt(id);
+            });
+
+            // show snack bar
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("$item is removed")));
+          },
+          background: Container(color: Colors.red,),
+          child: ListTile(title: Text("$item"),),
+        );
+      },
+      itemCount: items.length,
+      itemExtent: 25.0,
+
+    );
+  }
+
+}
+
+class MyListView2 extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+
+    return MYListView2State();
+  }
+
+}
+
+class MYListView2State extends State<MyListView2> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, id) {
+          return ListTile(
+            title: Text("Test item: $id"),
+          );
+      },
+      itemCount: 3,
+    );
+  }
+
+}
+
+
 ///
 /// Create form widget
 ///
@@ -135,6 +211,8 @@ class _MyTextFieldSate extends State<MyTextField> {
   final TextEditingController _controller = TextEditingController();
 
 
+
+
   @override
   void initState() {
     super.initState();
@@ -161,6 +239,21 @@ class _MyTextFieldSate extends State<MyTextField> {
           TextFormField(
             controller: _controller,
           ),
+          InkWell(
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Text("Hit me"),
+            ),
+            onTap: () {
+              Scaffold.of(context).showSnackBar(SnackBar(content: Text("I am hitted...")));
+            },
+          ),
+          Container(
+            height: 10.0,
+            color: Colors.red,
+          ),
+
+
         ],
       ),
     );
